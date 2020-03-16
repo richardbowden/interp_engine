@@ -126,11 +126,23 @@ int test_dollar_inside_token()
 
     tok_pos* t = NULL;
     int count = ie_find_tokens(test_str, &t);
-    
+
     _assert(count == -1);
     _assert(ie_get_state() == TOK_INVALID_CHAR);
     _assert(ie_get_error_pos() == 10);
 
+    return 0;
+}
+
+int test_to_short()
+{
+    char* test_str = "ads";
+    tok_pos* t = NULL;
+    int count = ie_find_tokens(test_str, &t);
+
+    _assert(count == -1);
+    _assert(ie_get_state() == TOK_NOT_ENOUGH_CHARS);
+    free(t);
     return 0;
 }
 
@@ -145,6 +157,7 @@ int all_tests()
     _verify(doubletest);
     _verify(trippletest);
     _verify(test_dollar_inside_token);
+    _verify(test_to_short);
 
     return 0;
 }
