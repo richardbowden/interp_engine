@@ -1,5 +1,7 @@
+#include "ie_string.h"
 #include "interp_engine.h"
 #include <stdio.h>
+#include <string.h>
 
 #define FAIL() printf("\nfailure in %s() line %d\n", __func__, __LINE__)
 #define _assert(test)  \
@@ -146,6 +148,20 @@ int test_to_short()
     return 0;
 }
 
+int test_ie_string()
+{
+    char* test_str = "aaa${a.a}/${b.b}/${c.c}";
+
+    ie_string* n = ie_string_new(test_str, true);
+    
+    _assert(n->num_tokens == 3);
+    _assert(strcmp("a.a", (*n->tokens+0)->tok_str) == 0);
+    _assert(strcmp("b.b", (*n->tokens+1)->tok_str) == 0);
+    _assert(strcmp("c.c", (*n->tokens+2)->tok_str) == 0);
+
+    return 0;
+}
+
 int all_tests()
 {
     _verify(test_simple_token);
@@ -158,6 +174,7 @@ int all_tests()
     _verify(trippletest);
     _verify(test_dollar_inside_token);
     _verify(test_to_short);
+    _verify(test_ie_string);
 
     return 0;
 }

@@ -17,6 +17,8 @@ add_executable(mystring
 add_executable(tests
     src/interp_engine.c
     include/interp_engine.h
+    src/ie_string.c
+    include/ie_string.h
     src/tests.c
 )
 
