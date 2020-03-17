@@ -162,6 +162,23 @@ int test_ie_string()
     return 0;
 }
 
+int test_ie_string_extract()
+{
+    char* test_str = "/home/${directory.home}/bin";
+
+    ie_string* n = ie_string_new(test_str, true);
+    
+    char * t = ie_string_get_token(n, 2);
+    char * a = ie_string_replace_token(n, "richard", 1);
+    
+    _assert(n->num_tokens == 1);
+    _assert(strcmp("directory.home", (*n->tokens+0)->tok_str) == 0);
+
+
+    return 0;
+}
+
+
 int all_tests()
 {
     _verify(test_simple_token);
@@ -175,6 +192,7 @@ int all_tests()
     _verify(test_dollar_inside_token);
     _verify(test_to_short);
     _verify(test_ie_string);
+    _verify(test_ie_string_extract);
 
     return 0;
 }

@@ -20,6 +20,9 @@ typedef struct ie_string_s {
 } ie_string;
 
 ie_string* ie_string_new(char* str, bool tok_parse);
-// int ie_string_parse(ie_string* str);
+
+char * ie_string_get_token(ie_string* str, int num);
+char * ie_string_replace_token(ie_string* str, char *replacement, int tok_num);
+
 
 #endif // __IE_STRING
