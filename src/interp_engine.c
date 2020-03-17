@@ -71,6 +71,10 @@ static void parse_token(tok_pos* tok)
             tok->tok_len = ie_pos - tok_start;
             tok->str_len = (ie_pos)-start;
             tok->dot_pos = dot_pos;
+            
+            tok->tok_str = calloc(tok->tok_len + 1, sizeof(char));
+            memcpy(tok->tok_str, string + tok->str_start, tok->str_len);
+            tok->tok_str[tok->str_len] = '\0';
             ie_state = TOK_FOUND;
             return;
             break;
@@ -95,7 +99,7 @@ static void parse_token(tok_pos* tok)
     } else {
         ie_state = TOK_NOT_FOUND;
     }
-    
+
     return;
 }
 

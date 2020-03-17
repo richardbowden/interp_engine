@@ -32,6 +32,7 @@ typedef struct token_s {
     int tok_len;
     int str_len;
     int dot_pos;
+    char* tok_str;
 } tok_pos;
 
 int ie_get_error_pos();
