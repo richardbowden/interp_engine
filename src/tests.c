@@ -29,6 +29,7 @@ int test_simple_token()
 
     _assert(count == 1);
     _assert(t->tok_start == 0);
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -43,6 +44,7 @@ int test_less_simple_token()
     _assert(test_str[t->tok_end] == '}');
     _assert(test_str[t->str_start] == 'd');
     _assert(test_str[t->str_end] == 't');
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -58,6 +60,7 @@ int test_less_less_simple_token()
     _assert(test_str[t->str_start] == 'd');
     _assert(test_str[t->str_end] == 't');
     _assert(count == 1);
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -105,6 +108,7 @@ int doubletest()
     int count = ie_find_tokens(test_str, &t);
     _assert(ie_get_state() == TOK_FOUND);
     _assert(count == 2);
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -118,6 +122,7 @@ int trippletest()
     int count = ie_find_tokens(test_str, &t);
     _assert(ie_get_state() == TOK_FOUND);
     _assert(count == 3);
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -144,6 +149,7 @@ int test_to_short()
 
     _assert(count == -1);
     _assert(ie_get_state() == TOK_NOT_ENOUGH_CHARS);
+    free(t->tok_str);
     free(t);
     return 0;
 }
@@ -175,7 +181,9 @@ int test_ie_string_extract()
     
     _assert(n->num_tokens == 1);
     _assert(strcmp("directory.home", (*n->tokens+0)->tok_str) == 0);
-
+    
+    
+    free(n);
     free(t);
     free(a);
     
