@@ -41,7 +41,12 @@ char * ie_string_get_token(ie_string* str, int num){
 }
 
 char * ie_string_replace_token(ie_string* str, char *replacement, int tok_num){
-
+    //TODO: works for now, come back and relook at this
+    
+    assert(replacement != NULL);
+    assert(tok_num > 0);
+    assert(str->tok_parsed == true);
+    
     tok_pos * t = (*str->tokens+tok_num-1);
     
     int beging = t->tok_start;
@@ -51,18 +56,28 @@ char * ie_string_replace_token(ie_string* str, char *replacement, int tok_num){
     int new_len = beging + len_replacement + end +1;
     
     char * new_str = calloc(new_len, sizeof(char));
+    
+    //copy pointer to allow us to move the pointer around without touching the original in str
     char *orig_str = str->str;
     
+    //beging of the original string
     memcpy(new_str,orig_str , beging);
     new_str = new_str+beging;
+    
+    //copy in the replacement string
     memcpy(new_str, replacement, len_replacement);
     new_str = new_str+len_replacement;
     
+    //check to see if the replacement is the end of the string, or if there are chars after, copy that part to the end of the new string
     if (t->tok_end+1 != str->len){
         orig_str = orig_str+t->tok_end+1;
         memcpy(new_str, orig_str, end);
     }
     
+    //move string pointer back to the start
     new_str = new_str-beging-len_replacement;
+    
+    //be good and terminate the string
+    new_str[new_len-1] = '\0';
     return new_str;
 }

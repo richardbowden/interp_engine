@@ -171,10 +171,14 @@ int test_ie_string_extract()
     char * t = ie_string_get_token(n, 2);
     char * a = ie_string_replace_token(n, "richard", 1);
     
+    
+    
     _assert(n->num_tokens == 1);
     _assert(strcmp("directory.home", (*n->tokens+0)->tok_str) == 0);
 
-
+    free(t);
+    free(a);
+    
     return 0;
 }
 

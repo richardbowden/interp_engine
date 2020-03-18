@@ -24,13 +24,18 @@ enum p_state {
     TOK_EOF,
 };
 
+/*
+ token_s holds posistional data about parts of a string, all posistions are 0 based unless otherwise stated
+ 
+ NOTE: fileds are to be treated as PRIVATE and may change in the future
+ */
 typedef struct token_s {
     int tok_start;
     int tok_end;
     int str_start;
     int str_end;
-    int tok_len;
-    int str_len;
+    int tok_len; //not 0 based, the len of the actual string
+    int str_len; //not 0 based, the len of the actual string
     int dot_pos;
     char* tok_str;
 } tok_pos;
