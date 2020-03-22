@@ -156,14 +156,21 @@ int test_to_short()
 
 int test_ie_string()
 {
-    char* test_str = "aaa${a.a}/${b.b}/${c.c}";
+    char* test_str = "name/${a.a}/${b.b}/${c.c}";
 
     ie_string* n = ie_string_new(test_str, true);
-    
+
+    char* replacements[n->num_tokens];
+    replacements[0] = "richard";
+    replacements[1] = "david";
+    replacements[2] = "bowden";
+
+    char* aa = ie_string_replace_all_tokens(n, replacements, n->num_tokens);
+
     _assert(n->num_tokens == 3);
-    _assert(strcmp("a.a", (*n->tokens+0)->tok_str) == 0);
-    _assert(strcmp("b.b", (*n->tokens+1)->tok_str) == 0);
-    _assert(strcmp("c.c", (*n->tokens+2)->tok_str) == 0);
+    _assert(strcmp("a.a", (*n->tokens + 0)->tok_str) == 0);
+    _assert(strcmp("b.b", (*n->tokens + 1)->tok_str) == 0);
+    _assert(strcmp("c.c", (*n->tokens + 2)->tok_str) == 0);
 
     return 0;
 }
@@ -173,23 +180,26 @@ int test_ie_string_extract()
     char* test_str = "/home/${directory.home}/bin";
 
     ie_string* n = ie_string_new(test_str, true);
-    
-    char * t = ie_string_get_token(n, 2);
-    char * a = ie_string_replace_token(n, "richard", 1);
-    
-    
-    
+
+    char* t = ie_string_get_token(n, 2);
+    char* a = ie_string_replace_token(n, "richard", 1);
+
+    printf("replacement_str: %s\n", "richard");
+    printf("old_str: %s, final_str: %s\n", test_str, a);
+
+    for (int i = 0; i < n->num_tokens; i++) {
+        printf("token_%d: %s\n", i + 1, (*n->tokens + i)->tok_str);
+    }
+
     _assert(n->num_tokens == 1);
-    _assert(strcmp("directory.home", (*n->tokens+0)->tok_str) == 0);
-    
-    
+    _assert(strcmp("directory.home", (*n->tokens + 0)->tok_str) == 0);
+
     free(n);
     free(t);
     free(a);
-    
+
     return 0;
 }
-
 
 int all_tests()
 {
