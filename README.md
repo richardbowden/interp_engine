@@ -8,3 +8,4 @@ This is early for now.
 
 `make test` to run tests
 
+![C/C++ CI](https://github.com/richardbowden/interp_engine/workflows/C/C++%20CI/badge.svg?branch=develop)
